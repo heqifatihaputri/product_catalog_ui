@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // <-- Ini membuat import navigate terpakai
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,9 +30,10 @@ export default function LoginForm() {
 
       // Simpan token JWT ke localStorage
       localStorage.setItem('token', data.token);
-      alert('Login Berhasil! 🎉 Token JWT telah disimpan.');
 
-      // Nanti kita arahkan ke halaman dashboard produk di sini
+      // Redirect otomatis ke halaman index product
+      navigate('/dashboard');
+
     } catch (err: any) {
       setError(err.message);
     } finally {
